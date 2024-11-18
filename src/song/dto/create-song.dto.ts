@@ -1,6 +1,6 @@
 export class CreateSongDto {
   title: string
-  author: string
+  artist: string
   lenght: number
   played: number
   release: string

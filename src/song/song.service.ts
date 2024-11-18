@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
-import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { response } from 'express';
 
@@ -19,6 +18,7 @@ export class SongService {
     if (Object.values(createSongDto).every(x => x === null || x === undefined)) {
       return response.status(500).send();
     }
+    
     return await this.db.song.create({ data: createSongDto })
   }
 
@@ -39,7 +39,8 @@ export class SongService {
   }
 
   async findPopularArtists() {
-    return await this.db.song.groupBy({by: {author },_count: {lenght}})
+    //return await this.db.song.groupBy({by: {author },_count: {lenght}})
+    return 0;
   }
 
   async update(id: number, updateSongDto: UpdateSongDto) {
