@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { response } from 'express';
 
 @Controller('playlist')
 export class PlaylistController {
@@ -14,7 +15,7 @@ export class PlaylistController {
 
   @Get()
   findAll() {
-    return this.playlistService.findAll();
+    return this.playlistService.findAll().then(x => !x ? response.status(HttpStatus.NOT_FOUND).send({ message: "Server Error at findall" }) : response.status(HttpStatus.OK).send(x)).catch(err => { console.log(err); return response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'Server Error at findAll' }); });
   }
 
   @Get(':id')
